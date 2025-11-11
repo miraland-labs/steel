@@ -74,6 +74,28 @@ pub fn close_token_account_signed<'info>(
     )
 }
 
+/// Close token account using PDA signer with explicit program ID
+/// Use this when the PDA doesn't exist as an account (only used for signing)
+#[inline(always)]
+pub fn close_token_account_signed_with_program_id<'info>(
+    account_info: &AccountInfo<'info>,
+    destination_info: &AccountInfo<'info>,
+    owner_info: &AccountInfo<'info>,
+    token_program: &AccountInfo<'info>,
+    seeds: &[&[u8]],
+    program_id: &Pubkey,
+) -> ProgramResult {
+    let bump = Pubkey::find_program_address(seeds, program_id).1;
+    close_token_account_signed_with_bump(
+        account_info,
+        destination_info,
+        owner_info,
+        token_program,
+        seeds,
+        bump,
+    )
+}
+
 #[inline(always)]
 pub fn close_token_account_signed_with_bump<'info>(
     account_info: &AccountInfo<'info>,
@@ -139,6 +161,30 @@ pub fn transfer_signed<'info>(
     seeds: &[&[u8]],
 ) -> ProgramResult {
     let bump = Pubkey::find_program_address(seeds, authority_info.owner).1;
+    transfer_signed_with_bump(
+        authority_info,
+        from_info,
+        to_info,
+        token_program,
+        amount,
+        seeds,
+        bump,
+    )
+}
+
+/// Transfer tokens using PDA signer with explicit program ID
+/// Use this when the PDA doesn't exist as an account (only used for signing)
+#[inline(always)]
+pub fn transfer_signed_with_program_id<'info>(
+    authority_info: &AccountInfo<'info>,
+    from_info: &AccountInfo<'info>,
+    to_info: &AccountInfo<'info>,
+    token_program: &AccountInfo<'info>,
+    amount: u64,
+    seeds: &[&[u8]],
+    program_id: &Pubkey,
+) -> ProgramResult {
+    let bump = Pubkey::find_program_address(seeds, program_id).1;
     transfer_signed_with_bump(
         authority_info,
         from_info,
@@ -237,6 +283,34 @@ pub fn transfer_checked_signed<'info>(
     )
 }
 
+/// Transfer checked tokens using PDA signer with explicit program ID
+/// Use this when the PDA doesn't exist as an account (only used for signing)
+#[inline(always)]
+pub fn transfer_checked_signed_with_program_id<'info>(
+    authority_info: &AccountInfo<'info>,
+    from_info: &AccountInfo<'info>,
+    mint_info: &AccountInfo<'info>,
+    to_info: &AccountInfo<'info>,
+    token_program: &AccountInfo<'info>,
+    amount: u64,
+    decimals: u8,
+    seeds: &[&[u8]],
+    program_id: &Pubkey,
+) -> ProgramResult {
+    let bump = Pubkey::find_program_address(seeds, program_id).1;
+    transfer_checked_signed_with_bump(
+        authority_info,
+        from_info,
+        mint_info,
+        to_info,
+        token_program,
+        amount,
+        decimals,
+        seeds,
+        bump,
+    )
+}
+
 #[inline(always)]
 pub fn transfer_checked_signed_with_bump<'info>(
     authority_info: &AccountInfo<'info>,
@@ -293,6 +367,31 @@ pub fn mint_to_signed<'info>(
     )
 }
 
+/// Mint tokens using PDA signer with explicit program ID
+/// Use this when the PDA doesn't exist as an account (only used for signing)
+/// This is the recommended function for PDAs that are not created as accounts
+#[inline(always)]
+pub fn mint_to_signed_with_program_id<'info>(
+    mint_info: &AccountInfo<'info>,
+    to_info: &AccountInfo<'info>,
+    authority_info: &AccountInfo<'info>,
+    token_program: &AccountInfo<'info>,
+    amount: u64,
+    seeds: &[&[u8]],
+    program_id: &Pubkey,
+) -> ProgramResult {
+    let bump = Pubkey::find_program_address(seeds, program_id).1;
+    mint_to_signed_with_bump(
+        mint_info,
+        to_info,
+        authority_info,
+        token_program,
+        amount,
+        seeds,
+        bump,
+    )
+}
+
 #[inline(always)]
 pub fn mint_to_signed_with_bump<'info>(
     mint_info: &AccountInfo<'info>,
@@ -334,6 +433,32 @@ pub fn mint_to_checked_signed<'info>(
     seeds: &[&[u8]],
 ) -> ProgramResult {
     let bump = Pubkey::find_program_address(seeds, authority_info.owner).1;
+    mint_to_checked_signed_with_bump(
+        mint_info,
+        to_info,
+        authority_info,
+        token_program,
+        amount,
+        decimals,
+        seeds,
+        bump,
+    )
+}
+
+/// Mint checked tokens using PDA signer with explicit program ID
+/// Use this when the PDA doesn't exist as an account (only used for signing)
+#[inline(always)]
+pub fn mint_to_checked_signed_with_program_id<'info>(
+    mint_info: &AccountInfo<'info>,
+    to_info: &AccountInfo<'info>,
+    authority_info: &AccountInfo<'info>,
+    token_program: &AccountInfo<'info>,
+    amount: u64,
+    decimals: u8,
+    seeds: &[&[u8]],
+    program_id: &Pubkey,
+) -> ProgramResult {
+    let bump = Pubkey::find_program_address(seeds, program_id).1;
     mint_to_checked_signed_with_bump(
         mint_info,
         to_info,
@@ -414,6 +539,30 @@ pub fn burn_signed<'info>(
     seeds: &[&[u8]],
 ) -> ProgramResult {
     let bump = Pubkey::find_program_address(seeds, authority_info.owner).1;
+    burn_signed_with_bump(
+        token_account_info,
+        mint_info,
+        authority_info,
+        token_program,
+        amount,
+        seeds,
+        bump,
+    )
+}
+
+/// Burn tokens using PDA signer with explicit program ID
+/// Use this when the PDA doesn't exist as an account (only used for signing)
+#[inline(always)]
+pub fn burn_signed_with_program_id<'info>(
+    token_account_info: &AccountInfo<'info>,
+    mint_info: &AccountInfo<'info>,
+    authority_info: &AccountInfo<'info>,
+    token_program: &AccountInfo<'info>,
+    amount: u64,
+    seeds: &[&[u8]],
+    program_id: &Pubkey,
+) -> ProgramResult {
+    let bump = Pubkey::find_program_address(seeds, program_id).1;
     burn_signed_with_bump(
         token_account_info,
         mint_info,
@@ -506,6 +655,32 @@ pub fn burn_checked_signed<'info>(
     )
 }
 
+/// Burn checked tokens using PDA signer with explicit program ID
+/// Use this when the PDA doesn't exist as an account (only used for signing)
+#[inline(always)]
+pub fn burn_checked_signed_with_program_id<'info>(
+    token_account_info: &AccountInfo<'info>,
+    mint_info: &AccountInfo<'info>,
+    authority_info: &AccountInfo<'info>,
+    token_program: &AccountInfo<'info>,
+    amount: u64,
+    decimals: u8,
+    seeds: &[&[u8]],
+    program_id: &Pubkey,
+) -> ProgramResult {
+    let bump = Pubkey::find_program_address(seeds, program_id).1;
+    burn_checked_signed_with_bump(
+        token_account_info,
+        mint_info,
+        authority_info,
+        token_program,
+        amount,
+        decimals,
+        seeds,
+        bump,
+    )
+}
+
 #[inline(always)]
 pub fn burn_checked_signed_with_bump<'info>(
     token_account_info: &AccountInfo<'info>,
@@ -585,6 +760,30 @@ pub fn freeze_signed<'info>(
     )
 }
 
+/// Freeze account using PDA signer with explicit program ID
+/// Use this when the PDA doesn't exist as an account (only used for signing)
+#[inline(always)]
+pub fn freeze_signed_with_program_id<'info>(
+    account_info: &AccountInfo<'info>,
+    mint_info: &AccountInfo<'info>,
+    owner_info: &AccountInfo<'info>,
+    signer_info: &AccountInfo<'info>,
+    token_program: &AccountInfo<'info>,
+    seeds: &[&[u8]],
+    program_id: &Pubkey,
+) -> ProgramResult {
+    let bump = Pubkey::find_program_address(seeds, program_id).1;
+    freeze_signed_with_bump(
+        account_info,
+        mint_info,
+        owner_info,
+        signer_info,
+        token_program,
+        seeds,
+        bump,
+    )
+}
+
 #[inline(always)]
 pub fn freeze_signed_with_bump<'info>(
     account_info: &AccountInfo<'info>,
@@ -652,6 +851,32 @@ pub fn initialize_mint_signed<'info>(
     seeds: &[&[u8]],
 ) -> ProgramResult {
     let bump = Pubkey::find_program_address(seeds, mint_info.owner).1;
+    initialize_mint_signed_with_bump(
+        mint_info,
+        mint_authority_info,
+        freeze_authority_info,
+        token_program,
+        rent_sysvar,
+        decimals,
+        seeds,
+        bump,
+    )
+}
+
+/// Initialize mint using PDA signer with explicit program ID
+/// Use this when the PDA doesn't exist as an account (only used for signing)
+#[inline(always)]
+pub fn initialize_mint_signed_with_program_id<'info>(
+    mint_info: &AccountInfo<'info>,
+    mint_authority_info: &AccountInfo<'info>,
+    freeze_authority_info: Option<&AccountInfo<'info>>,
+    token_program: &AccountInfo<'info>,
+    rent_sysvar: &AccountInfo<'info>,
+    decimals: u8,
+    seeds: &[&[u8]],
+    program_id: &Pubkey,
+) -> ProgramResult {
+    let bump = Pubkey::find_program_address(seeds, program_id).1;
     initialize_mint_signed_with_bump(
         mint_info,
         mint_authority_info,
@@ -743,6 +968,30 @@ pub fn thaw_account_signed<'info>(
     )
 }
 
+/// Thaw account using PDA signer with explicit program ID
+/// Use this when the PDA doesn't exist as an account (only used for signing)
+#[inline(always)]
+pub fn thaw_account_signed_with_program_id<'info>(
+    token_account_info: &AccountInfo<'info>,
+    mint_info: &AccountInfo<'info>,
+    owner_info: &AccountInfo<'info>,
+    authority_info: &AccountInfo<'info>,
+    token_program: &AccountInfo<'info>,
+    seeds: &[&[u8]],
+    program_id: &Pubkey,
+) -> ProgramResult {
+    let bump = Pubkey::find_program_address(seeds, program_id).1;
+    thaw_account_signed_with_bump(
+        token_account_info,
+        mint_info,
+        owner_info,
+        authority_info,
+        token_program,
+        seeds,
+        bump,
+    )
+}
+
 #[inline(always)]
 pub fn thaw_account_signed_with_bump<'info>(
     token_account_info: &AccountInfo<'info>,
@@ -823,6 +1072,30 @@ pub fn set_authority_signed<'info>(
     )
 }
 
+/// Set authority using PDA signer with explicit program ID
+/// Use this when the PDA doesn't exist as an account (only used for signing)
+#[inline(always)]
+pub fn set_authority_signed_with_program_id<'info>(
+    account_or_mint: &AccountInfo<'info>,
+    authority_info: &AccountInfo<'info>,
+    new_authority_info: Option<&AccountInfo<'info>>,
+    authority_type: spl_token_2022::instruction::AuthorityType,
+    token_program: &AccountInfo<'info>,
+    seeds: &[&[u8]],
+    program_id: &Pubkey,
+) -> ProgramResult {
+    let bump = Pubkey::find_program_address(seeds, program_id).1;
+    set_authority_signed_with_bump(
+        account_or_mint,
+        authority_info,
+        new_authority_info,
+        authority_type,
+        token_program,
+        seeds,
+        bump,
+    )
+}
+
 #[inline(always)]
 pub fn set_authority_signed_with_bump<'info>(
     account_or_mint: &AccountInfo<'info>,
@@ -885,6 +1158,20 @@ pub fn revoke_signed<'info>(
     seeds: &[&[u8]],
 ) -> ProgramResult {
     let bump = Pubkey::find_program_address(seeds, authority_info.owner).1;
+    revoke_signed_with_bump(source_info, authority_info, token_program, seeds, bump)
+}
+
+/// Revoke using PDA signer with explicit program ID
+/// Use this when the PDA doesn't exist as an account (only used for signing)
+#[inline(always)]
+pub fn revoke_signed_with_program_id<'info>(
+    source_info: &AccountInfo<'info>,
+    authority_info: &AccountInfo<'info>,
+    token_program: &AccountInfo<'info>,
+    seeds: &[&[u8]],
+    program_id: &Pubkey,
+) -> ProgramResult {
+    let bump = Pubkey::find_program_address(seeds, program_id).1;
     revoke_signed_with_bump(source_info, authority_info, token_program, seeds, bump)
 }
 
