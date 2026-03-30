@@ -1,5 +1,5 @@
 [package]
-name = "steel"
+name = "miraland-steel"
 description = "Solana smart contract framework"
 version.workspace = true
 edition.workspace = true
@@ -24,4 +24,3 @@ spl-token = { workspace = true, optional = true }
 spl-token-2022 = { workspace = true, optional = true }
 spl-associated-token-account = { workspace = true, optional = true }
 thiserror.workspace = true
-

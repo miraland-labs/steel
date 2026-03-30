@@ -1625,6 +1625,42 @@ dependencies = [
 ]
 
 [[package]]
+name = "miraland-steel"
+version = "4.0.3"
+dependencies = [
+ "bytemuck",
+ "fixed",
+ "num_enum",
+ "serde",
+ "solana-program",
+ "spl-associated-token-account",
+ "spl-token 4.0.2",
+ "spl-token-2022 7.0.0",
+ "thiserror 1.0.69",
+]
+
+[[package]]
+name = "miraland-steel-cli"
+version = "4.0.3"
+dependencies = [
+ "anyhow",
+ "clap 3.2.25",
+ "clap 4.5.26",
+ "colored",
+ "git2",
+ "indicatif",
+ "prettyplease",
+ "quote",
+ "serde_json",
+ "solana-clap-v3-utils",
+ "solana-cli-config",
+ "solana-sdk",
+ "syn 2.0.96",
+ "tokio",
+ "toml 0.8.19",
+]
+
+[[package]]
 name = "num-bigint"
 version = "0.4.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3403,42 +3439,6 @@ name = "stable_deref_trait"
 version = "1.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a8f112729512f8e442d81f95a8a7ddf2b7c6b8a1a6f509a95864142b30cab2d3"
-
-[[package]]
-name = "steel"
-version = "4.0.3"
-dependencies = [
- "bytemuck",
- "fixed",
- "num_enum",
- "serde",
- "solana-program",
- "spl-associated-token-account",
- "spl-token 4.0.2",
- "spl-token-2022 7.0.0",
- "thiserror 1.0.69",
-]
-
-[[package]]
-name = "steel-cli"
-version = "4.0.3"
-dependencies = [
- "anyhow",
- "clap 3.2.25",
- "clap 4.5.26",
- "colored",
- "git2",
- "indicatif",
- "prettyplease",
- "quote",
- "serde_json",
- "solana-clap-v3-utils",
- "solana-cli-config",
- "solana-sdk",
- "syn 2.0.96",
- "tokio",
- "toml 0.8.19",
-]
 
 [[package]]
 name = "strsim"
